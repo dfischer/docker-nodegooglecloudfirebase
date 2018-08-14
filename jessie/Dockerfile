@@ -7,7 +7,7 @@ RUN curl https://storage.googleapis.com/download.dartlang.org/linux/debian/dart_
 RUN curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
 RUN apt-get update && apt-get install -y google-cloud-sdk google-cloud-sdk-app-engine-go dart
 RUN npm install -g firebase-tools
-ENV PATH $PATH:/usr/lib/dart/bin:$HOME/.pub-cache/bin
+ENV PATH $PATH:/usr/lib/dart/bin
 
 
 CMD ["node"]
