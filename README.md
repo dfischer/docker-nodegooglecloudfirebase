@@ -7,5 +7,6 @@ This is a docker image that includes
 1. Dart SDK
 1. Firebase
 1. JQ
+1. gitlab-notifier-slack
 
 This was built to make builds faster in CI/CD to take advantage of layers & cache speed.

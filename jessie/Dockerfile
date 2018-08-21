@@ -33,17 +33,9 @@ RUN set -eux; \
     \
     export PATH="/usr/local/go/bin:$PATH"; \
     go version
-
 ENV GOPATH /go
-ENV PATH $GOPATH/bin:/usr/local/go/bin:$PATH
-RUN mkdir -p "$GOPATH/src" "$GOPATH/bin" && chmod -R 777 "$GOPATH"
-RUN apt-get update && apt-get install apt-transport-https
-RUN echo "deb http://packages.cloud.google.com/apt cloud-sdk-jessie main" | tee /etc/apt/sources.list.d/google-cloud-sdk.list
-RUN curl https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
-RUN curl https://storage.googleapis.com/download.dartlang.org/linux/debian/dart_stable.list > /etc/apt/sources.list.d/dart_stable.list
-RUN curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
-RUN apt-get update && apt-get install -y google-cloud-sdk google-cloud-sdk-app-engine-go dart jq
-RUN npm install -g firebase-tools
-ENV PATH $PATH:/usr/lib/dart/bin
+ENV PATH $GOPATH/bin:/usr/local/go/bin:/usr/lib/dart/bin:$PATH
+RUN mkdir -p "$GOPATH/src" "$GOPATH/bin" && chmod -R 777 "$GOPATH" && apt-get update && apt-get install -y --no-install-recommends apt-transport-https && echo "deb http://packages.cloud.google.com/apt cloud-sdk-jessie main" | tee /etc/apt/sources.list.d/google-cloud-sdk.list && curl https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - && curl https://storage.googleapis.com/download.dartlang.org/linux/debian/dart_stable.list > /etc/apt/sources.list.d/dart_stable.list && curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add - &&  apt-get update && apt-get install --no-install-recommends -y google-cloud-sdk google-cloud-sdk-app-engine-go dart jq && npm install -g firebase-tools && rm -rf /var/lib/apt/lists/*
+RUN mkdir -p "$GOPATH/src/github.com/dfischer" && cd $GOPATH/src/github.com/dfischer && git clone https://github.com/dfischer/gitlab-notify-slack && cd gitlab-notify-slack && go install
 
 CMD ["node"]
